@@ -1,0 +1,227 @@
+﻿@{
+    var session = (SNShop.Common.UserLogin)Session[SNShop.Common.Constants.USER_SESSION];
+
+}
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>SHSHOP</title>
+    <!--Add shortcut icon-->
+    <link rel="shortcut icon" type="image/x-icon" href="~/Images/logo.png" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="~/asset/client/css/slider.css" type="text/css" media="screen" />
+    <link href="/asset/client/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/asset/client/css/Failure.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/asset/client/css/Success.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/asset/client/css/easy-responsive-tabs.css" rel="stylesheet" type="text/css" media="all" />
+    <link rel="stylesheet" href="~/asset/client/css/global.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="~/asset/client/js/easing.js" defer></script>
+    <script src="~/asset/client/js/move-top.js" defer></script>
+    <script src="~/Scripts/bootstrap.js" defer></script>
+    <script src="~/Scripts/SmoothScroll.min.js" defer></script>
+    <script src="~/asset/client/js/slides.min.jquery.js" defer></script>
+    <script src="~/asset/client/js/easyResponsiveTabs.js" defer></script>
+    <script src="/asset/admin/vendor/jquery/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="~/asset/client/js/lazyloading.js" defer></script>
+</head>
+<body>
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v15.0&appId=825172852223123&autoLogAppEvents=1" nonce="jnn50wyi"></script>
+    <div class="wrap">
+        <div class="header">
+            <div class="headertop_desc">
+
+                <div class="call">
+                    <p><span>Need help?</span> call us <span class="number">0927718471</span></p>
+                </div>
+                <div class="account_desc">
+                    <ul>
+                        @if (session == null)
+                        {
+                            <li>@Html.ActionLink("Register", "Register", "Account")</li>
+                            <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                        }
+                        else
+                        {
+                            <li>
+                                <span style="color:red">Xin chào:</span><a href="@Url.Action("ShowProfile", "Account")">
+                                    <span>
+
+                                        @if (session.Image != null)
+                                        {
+                                            <img class="rounded-circle" width="30" height="30" src="@session.Image">
+                                        }
+                                        else
+                                        {
+                                            <img class="rounded-circle" width="30" height="30" src="~/Images/Avatars/man-avatar.jpg">
+                                        }
+                                    </span> @session.UserName
+                                </a>
+                            </li>
+                            <li><a href="@Url.Action("Logout", "Account", new { url = HttpContext.Current.Request.RawUrl})">Logout</a></li>
+
+                        }
+
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="header_top">
+                <div class="logo">
+                    <a href="@Url.Action("Index","Home")"><img src="/asset/client/images/logo.png" alt="" /></a>
+                </div>
+                <div class="cart">
+                    <a href="@Url.Action("ListCart","Cart")"><i class="fa-solid fa-cart-shopping"></i></a>
+                    <p>
+                        <div id="dd" class="wrapper-dropdown-2">
+                            <span id="dd1" class="text-danger h6">@ViewBag.Countproduct</span> sản phẩm
+                            <ul class="dropdown" style="padding:0">
+                                <li style="text-align:start">Bạn có <span id="dd2" class="text-danger h6">@ViewBag.Countproduct</span> sản phẩm trong giỏ hàng</li>
+                            </ul>
+                        </div>
+                    </p>
+                </div>
+                <script type="text/javascript">
+                    function DropDown(el) {
+                        this.dd = el;
+                        this.initEvents();
+                    }
+                    DropDown.prototype = {
+                        initEvents: function () {
+                            var obj = this;
+
+                            obj.dd.on('click', function (event) {
+                                $(this).toggleClass('active');
+                                event.stopPropagation();
+                            });
+                        }
+                    }
+
+                    $(function () {
+
+                        var dd = new DropDown($('#dd'));
+
+                        $(document).click(function () {
+                            // all dropdowns
+                            $('.wrapper-dropdown-2').removeClass('active');
+                        });
+
+                    });</script>
+                <div class="clear"></div>
+            </div>
+            <div class="header_bottom">
+                <div class="menu" id="myTopmenu">
+                    <ul style="width:100%">
+                        <li class="active">@Html.ActionLink("Index", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                        <li class="fa-pull-right">
+                            <div>
+                                <form>
+                                    <input type="text" name="SearchString" placeholder="Nhập tên sản phẩm" value="@ViewBag.CurrentFilter" />
+                                    <input type="submit" class="btn btn-danger" value="Search" />
+                                </form>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" id="icon" onclick="myFunction()">
+                                <i class="fa-solid fa-bars"></i>
+                            </a>
+                        </li>
+                        @*<li> <div class="clear"></div></li>*@
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+            @RenderSection("slide", required: false)
+
+        </div>
+        <div class="main">
+            @RenderBody()
+        </div>
+    </div>
+    <div class="footer">
+        <div class="wrap">
+            <div class="section group">
+                <div class="col_1_of_4 span_1_of_4">
+                    <h4>Information</h4>
+                    <ul>
+                        <li><a href="@Url.Action("About","Home")">About Us</a></li>
+                        <li><a href="@Url.Action("Contact","Home")">Customer Service</a></li>
+                        <li><a href="@Url.Action("OrdersReturn", "Home")">Orders and Returns</a></li>
+                        <li><a href="@Url.Action("Contact","Home")">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col_1_of_4 span_1_of_4">
+                    <h4>Why buy from us</h4>
+                    <ul>
+                        <li><a href="@Url.Action("About","Home")">About Us</a></li>
+                        <li><a href="@Url.Action("Contact","Home")">Customer Service</a></li>
+                        <li><a href="@Url.Action("Contact","Home")">Site Map</a></li>
+                    </ul>
+                </div>
+                <div class="col_1_of_4 span_1_of_4">
+                    <h4>My account</h4>
+                    <ul>
+                        <li><a href="@Url.Action("Login","Account")">Sign In</a></li>
+                        <li><a href="@Url.Action("ListCart","Cart")">View Cart</a></li>
+                        <li><a href="@Url.Action("TrackCart","Cart")">Track My Order</a></li>
+                        <li><a href="@Url.Action("Contact","Home")">Help</a></li>
+                    </ul>
+                </div>
+                <div class="col_1_of_4 span_1_of_4">
+                    <h4>Contact</h4>
+                    <ul>
+                        <li><span>0927718471</span></li>
+                        <li><span>0346303152 </span></li>
+                    </ul>
+                    <div class="social-icons">
+                        <h4>Follow Us</h4>
+                        <ul>
+                            <li><a href="https://www.facebook.com/" target="_blank"><img src="/asset/client/images/facebook.png" alt="" /></a></li>
+                            <li><a href="https://twitter.com/?lang=vi" target="_blank"><img src="/asset/client/images/twitter.png" alt="" /></a></li>
+                            <li><a href="https://www.skype.com/en/get-skype/" target="_blank"><img src="/asset/client/images/skype.png" alt="" /> </a></li>
+                            <li><a href="https://dribbble.com/" target="_blank"> <img src="/asset/client/images/dribbble.png" alt="" /></a></li>
+                            <li><a href="https://www.linkedin.com/" target="_blank"> <img src="/asset/client/images/linkedin.png" alt="" /></a></li>
+                            <li><div class="clear"></div></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copy_right">
+            <p>&copy; 2022 <a href="/">SNShop</a></p>
+        </div>
+    </div>
+
+    <a href="#" id="toTop"><span id="toTopHover"> </span></a>
+</body>
+</html>
+<script>
+    function myFunction() {
+        var x = document.getElementById("myTopmenu");
+        if (x.className === "menu") {
+            x.className += " responsive";
+        } else {
+            x.className = "menu";
+        }
+    }
+</script>
+@RenderSection("scripts", required: false)
+<script src="~/asset/client/js/Controller/UpdateCart.js"></script>
+<script src="~/asset/client/js/Controller/AddCart.js"></script>
+<script src="~/asset/client/js/Controller/CurrencyFormat.js"></script>
+<script src="~/asset/client/js/Controller/DeleteCart.js"></script>
+<script src="~/asset/client/js/Controller/DeleteAllCart.js"></script>

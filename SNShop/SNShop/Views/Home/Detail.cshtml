@@ -1,0 +1,203 @@
+﻿@model dynamic
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/asset/client/css/flexslider.css" type="text/css" media="screen" />
+<script type="text/javascript" src="~/asset/client/js/jquery.min.js"></script>
+<script defer type="text/javascript" src="~/asset/client/js/jquery.flexslider.js"></script>
+
+<div class="banner-bootom-w3-agileits py-5">
+    <div class="container py-xl-4 py-lg-2">
+        <!-- //tittle heading -->
+        <div class="row">
+            <div class="col-lg-5 col-md-8 single-right-left ">
+                <div class="grid">
+                    <div class="flexslider">
+                        <ul class="slides">
+                            @foreach (var item in Model.ProductImages)
+                            {
+                                <li data-thumb="@item.Thumbnail_Photo">
+                                    <div class="thumb-image">
+                                        <img src="@item.Thumbnail_Photo" data-imagezoom="true" class="img-fluid" alt="">
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7 single-right-left simpleCart_shelfItem" style="font-size:20px">
+                <h2 class="mb-3" style="color:red">@Model.Products.Name</h2>
+                <p class="my-3">
+                    <i class="far fa-hand-point-right mr-2"></i>
+                    <b>Đặc quyền</b>
+                </p>
+                <div class="single-infoagile">
+                    <ul>
+                        <li class="mb-3">
+                            &#8730;Bảo hành chính hãng 12 tháng.
+                        </li>
+                        <li class="mb-3">
+                            &#8730;Hỗ trợ đổi mới trong 7 ngày.
+                        </li>
+                        <li class="mb-3">
+                            &#8730;Windows bản quyền tích hợp.
+                        </li>
+                        <li class="mb-3">
+                            &#8730;Miễn phí giao hàng tận nơi.
+                        </li>
+                    </ul>
+                </div>
+                <p class="my-3">
+                    <i class="far fa-hand-point-right mr-2"></i>
+                    <b>Mô tả sản phẩm</b>
+                </p>
+                <div class="d-flex">
+                    <div class="product-single-w3l">
+
+                        <ul>
+                            <li class="mb-1">
+                                <b>Thương hiệu:</b> @Model.Products.Brand.Name
+                            </li>
+                            <li class="mb-1">
+                                <b>Vi xử lý:</b> @Model.Products.CPU
+                            </li>
+                            <li class="mb-1">
+                                <b>Card đồ họa:</b> @Model.Products.VGA
+                            </li>
+                            <li class="mb-1">
+                                <b>Màn hình:</b> @Model.Products.Screen
+                            </li>
+                            <li class="mb-1">
+                                <b>Bộ nhớ RAM:</b> @Model.Products.RAM
+                            </li>
+                            <li class="mb-1">
+                                <b>Ổ cứng:</b> @Model.Products.ROM
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="product-single-w3l">
+                        <ul>
+                            <li class="mb-1">
+                                <b>Hệ điều hành:</b> @Model.Products.OS
+                            </li>
+                            <li class="mb-1">
+                                <b>Màu sắc:</b> @Model.Products.Color
+                            </li>
+                            <li class="mb-1">
+                                <b>Camera:</b> @Model.Products.Webcam
+                            </li>
+                            <li class="mb-1">
+                                <b>PIN:</b> @Model.Products.PIN
+                            </li>
+                            <li class="mb-1">
+                                <b>Thiết kế:</b> @Model.Products.Design
+                            </li>
+                            <li class="mb-1">
+                                <b>Ngày ra mắt:</b> @String.Format($"{@Model.Products.Release: dd/MM/yyyy}")
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="my-sm-4 my-3">
+                    <i class="fas fa-retweet mr-3"></i><b>Thanh toán tại của hàng hoặc khi nhận sản phẩm.</b>
+                </p>
+                <div class="mb-3" style="font-size:30px">
+                    <div><span>Giá: </span><span class="rupees" style="color:red">@String.Format("{0:0,0}", Model.Products.Price)&#8363;</span></div>
+                </div>
+                <div class="occasion-cart">
+                    <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                        <a class="btn btn-danger text-white" onclick="addCart(@Model.Products.Id, '@Model.Products.Name', @Model.Products.Price, @Model.Products.UnitsInStock)">Thêm vào giỏ hàng</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+<div class="fb-comments" data-href="http://website1.dev/Home/Detail/@Model.Products.Id" data-width="100%" data-numposts="5"></div>
+<script>
+    jQuery(function ($) {
+        $("ul a")
+            .click(function (e) {
+                var link = $(this);
+
+                var item = link.parent("li");
+
+                if (item.hasClass("active")) {
+                    item.removeClass("active").children("a").removeClass("active");
+                } else {
+                    item.addClass("active").children("a").addClass("active");
+                }
+
+                if (item.children("ul").length > 0) {
+                    var href = link.attr("href");
+                    link.attr("href", "#");
+                    setTimeout(function () {
+                        link.attr("href", href);
+                    }, 300);
+                    e.preventDefault();
+                }
+            })
+            .each(function () {
+                var link = $(this);
+                if (link.get(0).href === location.href) {
+                    link.addClass("active").parents("li").addClass("active");
+                    return false;
+                }
+            });
+    });
+
+
+</script>
+<style>
+    input[type=text] {
+        margin: 5px;
+    }
+
+    .bdge {
+        height: 21px;
+        background-color: orange;
+        color: #fff;
+        font-size: 11px;
+        padding: 8px;
+        border-radius: 4px;
+        line-height: 3px;
+    }
+
+    .comments {
+        text-decoration: underline;
+        text-underline-position: under;
+        cursor: pointer;
+    }
+
+    .dot {
+        height: 7px;
+        width: 7px;
+        margin-top: 3px;
+        background-color: #bbb;
+        border-radius: 50%;
+        display: inline-block;
+    }
+
+    .hit-voting:hover {
+        color: blue;
+    }
+
+    .hit-voting {
+        cursor: pointer;
+    }
+</style>
+<script>
+    // Can also be used with $(document).ready()
+    $(window).load(function () {
+        $('.flexslider').flexslider({
+            animation: "slide",
+            controlNav: "thumbnails"
+        });
+    });
+</script>

@@ -1,0 +1,79 @@
+﻿@model IEnumerable<SNShop.Models.CartModel>
+
+@{
+    ViewBag.Title = "ListCart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="color:red; text-align:center; margin-top: 10px">GIỎ HÀNG</h2>
+<h3 class="text-danger">@ViewData["msg"]</h3>
+@if (ViewBag.Countproduct > 0)
+{
+    <div id="cart">
+        <table class="table">
+            <tr>
+                <th>
+                    Tên
+                </th>
+                <th>
+                    Số lượng trong kho
+                </th>
+                <th>
+                    Giá
+                </th>
+                <th>
+                    Số lượng muốn mua
+                </th>
+                <th colspan="2">
+                    Tổng tiền
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr id="Product_@item.ProductID">
+                    <td>
+                        <a href="@Url.Action("Detail", "Home", new { @id = item.ProductID })">@Html.DisplayFor(modelItem => item.ProductName)</a>
+                    </td>
+                    <td>
+                        <span class="item-price text-danger h6">@item.UnitsInStock</span>
+                    </td>
+                    <td>
+                        <span class="item-price text-danger h6" style="color:red">@String.Format("{0:0,0}", item.UnitPrice) &#8363;</span>
+                    </td>
+                    <td>
+                        <input name="quantity" value="@item.Quantity" min="1" type="number" onblur="updateCart(@item.ProductID, this)" />
+                    </td>
+                    <td>
+                        <span class="item-price text-danger h6" id="@item.ProductID">@String.Format("{0:0,0}", item.Total) &#8363;</span>
+                    </td>
+                    <td>
+                        <input class="btn btn-danger" type="button" onclick="deleteCart(@item.ProductID)" value="Delete" />
+                    </td>
+                </tr>
+
+            }
+            <tr>
+                <td colspan="2"> Số lượng sản phẩm: <span id="countCart" class="text-danger h6">@ViewBag.CountProduct</span></td>
+                <td colspan="3"><span style="color:black">Tổng tiền: </span><span id="countTotal" class="text-danger h6">@String.Format("{0:0,0}", ViewBag.ToTal) &#8363;</span></td>
+                <td><input class="btn btn-danger" type="button" onclick="DeleteAll()" value="Xóa tất cả" /></td>
+            </tr>
+        </table>
+        <div class="fa-pull-right">
+            @if (Session["UserID"] != null && Session["Roles"].ToString() == "Users")
+            {
+                <a href="@Url.Action("OrderForm","Cart")">Đặt hàng</a>
+            }
+            else
+            {
+                <a href="@Url.Action("Login", "Account", new {url = HttpContext.Current.Request.RawUrl })"> Bạn chưa đăng nhập </a>
+            }
+        </div>
+    </div>
+    <a href="@Url.Action("Index","Home")"><p style="text-align:center">Tiếp tục mua hàng</p></a>
+}
+else
+{
+    <p style="text-align:center; margin-top:10px">Không có sản phẩm</p>
+    <a href="@Url.Action("Index","Home")"><p style="text-align:center; margin-top: 10px">Tiếp tục mua hàng</p></a>
+}
